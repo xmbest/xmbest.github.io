@@ -14,7 +14,7 @@
 <meta property="og:description" content="用户管理及组12345678&#x2F;etc&#x2F;passwd         #用户账号文件&#x2F;etc&#x2F;shadow			#用户影子文件&#x2F;etc&#x2F;group			#用户组账号文件&#x2F;etc&#x2F;gshadow		#用户组影子文件&#x2F;etc&#x2F;spool&#x2F;mail		#用户邮箱目录&#x2F;etc&#x2F;skel			#用户模板目录&#x2F;etc&#x2F;default&#x2F;useradd&#x2F;etc&#x2F;login.defs		#用户默认配置  添加用户1u">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-07-15T06:34:00.000Z">
-<meta property="article:modified_time" content="2024-07-21T12:54:46.622Z">
+<meta property="article:modified_time" content="2024-07-21T13:03:53.068Z">
 <meta property="article:author" content="XIAMI">
 <meta name="twitter:card" content="summary">
     
@@ -168,8 +168,8 @@
 
 <h4 id="删除用户"><a href="#删除用户" class="headerlink" title="删除用户"></a>删除用户</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">userdel [-r] 用户名</span><br></pre></td></tr></table></figure>
 
-<pre><code>    -r 删除用户同时删除该用户家目录
-</code></pre>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-r 删除用户同时删除该用户家目录</span><br></pre></td></tr></table></figure>
+
 <h4 id="修改用户"><a href="#修改用户" class="headerlink" title="修改用户"></a>修改用户</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usermod [选项] 用户名</span><br></pre></td></tr></table></figure>
 
 <p>选项:</p>
@@ -190,8 +190,8 @@
 <h4 id="创建用户组"><a href="#创建用户组" class="headerlink" title="创建用户组"></a>创建用户组</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">groupadd [选项] 组名</span><br></pre></td></tr></table></figure>
 
 <p>选项</p>
-<pre><code>    -g 指定组id
-</code></pre>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">-g 指定组<span class="built_in">id</span></span><br></pre></td></tr></table></figure>
+
 <h4 id="删除用户组"><a href="#删除用户组" class="headerlink" title="删除用户组"></a>删除用户组</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">groupdel [选项] 组名</span><br></pre></td></tr></table></figure>
 
 <h4 id="把用户添加进组或从组中删除"><a href="#把用户添加进组或从组中删除" class="headerlink" title="把用户添加进组或从组中删除"></a>把用户添加进组或从组中删除</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpasswd [选项] 组名</span><br></pre></td></tr></table></figure>
@@ -459,8 +459,7 @@
 <p>   <strong>chmod</strong> u-x,g+w abc</p>
 </li>
 <li><p>通过数字变更</p>
-<pre><code>**chmod** 755 abc.txt
-</code></pre>
+<p><strong>chmod</strong> 755 abc.txt</p>
 </li>
 </ol>
 <p><strong>更改文件或目录所有权</strong> chown</p>
@@ -669,11 +668,11 @@
 
 <h6 id="break和continue"><a href="#break和continue" class="headerlink" title="break和continue"></a>break和continue</h6><p>◆Break和continue命令用于中断循环体的顺序执行。</p>
 <p><strong>◆</strong> break命令：将控制转移到done后面的命令，因此循环提前结束。</p>
-<pre><code>      格式为： break [n]
-</code></pre>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">格式为： <span class="built_in">break</span> [n]</span><br></pre></td></tr></table></figure>
+
 <p><strong>◆</strong>  continue命令：将控制转移到done,接着再次计算条件的值，以决定是否继续循环。      </p>
-<pre><code>      格式为：continue [n]
-</code></pre>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">格式为：<span class="built_in">continue</span> [n]</span><br></pre></td></tr></table></figure>
+
 <p><strong>◆</strong>  n: 表示要跳出几层循环，默认值是1，表示只跳出一层循环。</p>
 <h6 id="case语句"><a href="#case语句" class="headerlink" title="case语句"></a>case语句</h6><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">case string1 in</span><br><span class="line">str1)</span><br><span class="line">     commands-list1;;</span><br><span class="line">str2) </span><br><span class="line">     commands-list2;;</span><br><span class="line">...</span><br><span class="line">strn)</span><br><span class="line">     commands-listn;;</span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
 
