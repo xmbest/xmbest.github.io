@@ -14,7 +14,7 @@
 <meta property="og:description" content="用户管理及组12345678&#x2F;etc&#x2F;passwd         #用户账号文件&#x2F;etc&#x2F;shadow			#用户影子文件&#x2F;etc&#x2F;group			#用户组账号文件&#x2F;etc&#x2F;gshadow		#用户组影子文件&#x2F;etc&#x2F;spool&#x2F;mail		#用户邮箱目录&#x2F;etc&#x2F;skel			#用户模板目录&#x2F;etc&#x2F;default&#x2F;useradd&#x2F;etc&#x2F;login.defs		#用户默认配置  添加用户1u">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-07-15T06:34:00.000Z">
-<meta property="article:modified_time" content="2024-07-20T13:11:08.105Z">
+<meta property="article:modified_time" content="2024-07-21T12:54:46.622Z">
 <meta property="article:author" content="XIAMI">
 <meta name="twitter:card" content="summary">
     
@@ -164,18 +164,8 @@
 <h4 id="添加用户"><a href="#添加用户" class="headerlink" title="添加用户"></a>添加用户</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">useradd [选项] 用户名</span><br></pre></td></tr></table></figure>
 
 <p>选项：</p>
-<pre><code>    -u 指定uid
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">-u 指定uid</span><br><span class="line"></span><br><span class="line">-g 指定初始组(尽量不使用)</span><br><span class="line"></span><br><span class="line">-G 指定附加组</span><br><span class="line"></span><br><span class="line">-c 添加说明</span><br><span class="line"></span><br><span class="line">-d 指定家目录</span><br><span class="line"></span><br><span class="line">-s shell /bin/bash</span><br></pre></td></tr></table></figure>
 
-    -g 指定初始组(尽量不使用)
-
-    -G 指定附加组
-
-    -c 添加说明
-
-    -d 指定家目录
-
-    -s shell /bin/bash
-</code></pre>
 <h4 id="删除用户"><a href="#删除用户" class="headerlink" title="删除用户"></a>删除用户</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">userdel [-r] 用户名</span><br></pre></td></tr></table></figure>
 
 <pre><code>    -r 删除用户同时删除该用户家目录
@@ -183,44 +173,20 @@
 <h4 id="修改用户"><a href="#修改用户" class="headerlink" title="修改用户"></a>修改用户</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">usermod [选项] 用户名</span><br></pre></td></tr></table></figure>
 
 <p>选项:</p>
-<pre><code>    -u UID：修改用户的UID
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><span class="line">-u UID：修改用户的UID</span><br><span class="line"></span><br><span class="line">-d家目录：修改用户的家目录。家目录必须写绝对路径</span><br><span class="line"></span><br><span class="line">-c用户说明：修改用户的说明信息，就是/etc/passwd文件的第五个字段</span><br><span class="line"></span><br><span class="line">-g 组名：修改用户的初始组，就是/etc/passwd文件的第四个字段</span><br><span class="line"></span><br><span class="line">-G 组名：修改用户的附加组，其实就是把用户加入其他用户组</span><br><span class="line"></span><br><span class="line">-s shell：修改用户的登录Shell。默认是/bin/bash</span><br><span class="line"></span><br><span class="line">-e 日期：修改用户的失效日期，格式为“YYYY-MM-DD”。也就是/etc/shadow文件的第八个字段</span><br><span class="line"></span><br><span class="line">-L：”临时锁定用户(Lock)</span><br><span class="line"></span><br><span class="line">-U：解锁用户(Unlock)</span><br></pre></td></tr></table></figure>
 
-    -d家目录：修改用户的家目录。家目录必须写绝对路径
-
-    -c用户说明：修改用户的说明信息，就是/etc/passwd文件的第五个字段
-
-    -g 组名：修改用户的初始组，就是/etc/passwd文件的第四个字段
-
-    -G 组名：修改用户的附加组，其实就是把用户加入其他用户组
-
-    -s shell：修改用户的登录Shell。默认是/bin/bash
-
-    -e 日期：修改用户的失效日期，格式为“YYYY-MM-DD”。也就是/etc/shadow文件的第八个字段
-
-    -L：”临时锁定用户(Lock)
-
-    -U：解锁用户(Unlock)
-</code></pre>
 <h4 id="查询用户"><a href="#查询用户" class="headerlink" title="查询用户"></a>查询用户</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">id 用户名</span><br></pre></td></tr></table></figure>
 
 <h4 id="修改密码"><a href="#修改密码" class="headerlink" title="修改密码"></a>修改密码</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">passwd [选项] 用户名</span><br></pre></td></tr></table></figure>
 
 <p>选项：</p>
-<pre><code>    -l 暂时锁定用户(仅root使用)
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">-l 暂时锁定用户(仅root使用)</span><br><span class="line"></span><br><span class="line">-u 解锁用户(仅root使用)</span><br><span class="line"></span><br><span class="line">注 : 不加用户名即给当前用户修改密码</span><br></pre></td></tr></table></figure>
 
-    -u 解锁用户(仅root使用)
-
-    注 : 不加用户名即给当前用户修改密码
-</code></pre>
 <h4 id="切换用户"><a href="#切换用户" class="headerlink" title="切换用户"></a>切换用户</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">su [选项] 用户名</span><br><span class="line">su -c &quot;ls /home&quot; 用户名</span><br><span class="line">su - 用户名</span><br></pre></td></tr></table></figure>
 
 <p>选项：</p>
-<pre><code>    - 用户环境变量一起切换
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">- 用户环境变量一起切换</span><br><span class="line"></span><br><span class="line">-c 仅执行一次命令,不切换身份 </span><br><span class="line"></span><br><span class="line"> <span class="built_in">exit</span>,<span class="built_in">logout</span>注销退到上个用户</span><br></pre></td></tr></table></figure>
 
-    -c 仅执行一次命令,不切换身份 
-
-     exit,logout注销退到上个用户
-</code></pre>
 <h4 id="创建用户组"><a href="#创建用户组" class="headerlink" title="创建用户组"></a>创建用户组</h4><figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">groupadd [选项] 组名</span><br></pre></td></tr></table></figure>
 
 <p>选项</p>
@@ -230,12 +196,8 @@
 
 <h4 id="把用户添加进组或从组中删除"><a href="#把用户添加进组或从组中删除" class="headerlink" title="把用户添加进组或从组中删除"></a>把用户添加进组或从组中删除</h4><figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">gpasswd [选项] 组名</span><br></pre></td></tr></table></figure>
 
-<pre><code>选项:
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">选项:</span><br><span class="line"></span><br><span class="line"> -a 用户名：把用户加入组</span><br><span class="line"></span><br><span class="line">	-d 用户名：把用户从组中删除</span><br></pre></td></tr></table></figure>
 
- -a 用户名：把用户加入组
-
-    -d 用户名：把用户从组中删除
-</code></pre>
 <h3 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h3><p>在Linux系统上，<strong>一切皆文件</strong>，任何软件和I&#x2F;O设备都被视为文件。Linux中文件名最大支持<strong>256</strong>个字符，可以分别用A-Z，a-z，0-9等字符来命名，与Windows不同，Linux中文件名是<strong>区分大小写</strong>的。Linux系统中的文件是否能被执行，与扩展名没有关系，主要看<strong>文件的属性</strong></p>
 <p>普通文件：最常使用的一类文件，用于存放数据、程序等信息的文件，如图形文件、声音文件、文档文件等，使用 ls -l 命令后，<strong>第一列第一个字符</strong>为“-”的文件为普通文件，普通文件一般为灰色字体，绿色字体的是可执行文件，红色字体的是压缩文件</p>
 <p>目录文件：Linux内核组织文件系统的基本节点，存放文件名及其相关信息的文件，包含下一级目录或普通文件</p>
@@ -510,7 +472,7 @@
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">chgrp newgroup file</span><br><span class="line">-R #如果是目录则使其下所有子文件或目录递归生效，即一次修改某个目录下所有文件的所有者</span><br></pre></td></tr></table></figure>
 
 <p><strong>文件默认权限</strong> umask掩码</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">用八进制数显示umask权限：umask</span><br><span class="line">更改umask umask 027</span><br><span class="line">文件创建时的默认权限=0666-umask</span><br><span class="line">目录创建时的默认权限=0777-umask</span><br><span class="line">单纯计算不准确 可以通过字母符号计算</span><br></pre></td></tr></table></figure>
+<figure class="highlight sh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">用八进制数显示<span class="built_in">umask</span>权限：<span class="built_in">umask</span></span><br><span class="line">更改<span class="built_in">umask</span> <span class="built_in">umask</span> 027</span><br><span class="line">文件创建时的默认权限=0666-<span class="built_in">umask</span></span><br><span class="line">目录创建时的默认权限=0777-<span class="built_in">umask</span></span><br><span class="line">单纯计算不准确 可以通过字母符号计算</span><br></pre></td></tr></table></figure>
 
 <p><strong>文件特殊权限SUID、SGID、Dticky BIT</strong></p>
 <p><strong>SUID</strong> 4 命令执行者要拥有执行权限 在执行该程序是获取程序所属主的身份 执行过程中有效 如passwd,</p>
@@ -786,8 +748,9 @@
 <p>  <strong>◆</strong>  cron是一个守护进程,是一个标准的后台服务程序。使用cron作业必须运行<strong>crond</strong> 服务。</p>
 <p>  <strong>◆</strong>  crontab命令和at命令类似，也是通过&#x2F;etc&#x2F;cron. allow和&#x2F;etc&#x2F;cron.deny文件来限制某些用户是否可以使用crontab命令，限制原则类似</p>
 <p><strong>◆  用户的<strong><strong>crontab</strong></strong>设置</strong></p>
-<pre><code>每个用户都可以实现自己的crontab定时任务，只要是使用这个用户身份执行“crontab -e”命令即可，这个用户不能加入/etc/cron.deny文件中。
-</code></pre>
+<blockquote>
+<p>每个用户都可以实现自己的crontab定时任务，只要是使用这个用户身份执行“crontab -e”命令即可，这个用户不能加入&#x2F;etc&#x2F;cron.deny文件中。</p>
+</blockquote>
 <p>crontab命令格式如下:</p>
 <figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">crontab [选项]</span><br><span class="line">-e #编辑crontab定时任务</span><br><span class="line">-l #查询crontab任务</span><br><span class="line">-r #删除当前用户的所有crontab任务,-e删除一个</span><br><span class="line">-u 用户名 #修改或删除其他用户crntab 仅root可用</span><br></pre></td></tr></table></figure>
 
