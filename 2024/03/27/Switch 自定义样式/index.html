@@ -6,23 +6,23 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="HandheldFriendly" content="True">
     <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
-    <meta name="description" content="最终效果 minHeight，switchMinWidth调整switch开关高度、宽度 android:thumb   开关按钮上原型滑块的样式 android:track  开关按钮下面导轨的样式 123456789101112&lt;Switch        android:layout_width&#x3D;&quot;48dp&quot;        android:layout_height">
+    <meta name="description" content="最终效果     minHeight，switchMinWidth调整switch开关高度、宽度 android:thumb   开关按钮上原型滑块的样式 android:track  开关按钮下面导轨的样式 123456789101112&lt;Switch        android:layout_width&#x3D;&quot;48dp&quot;        android:layout_he">
 <meta property="og:type" content="article">
 <meta property="og:title" content="Switch 自定义样式">
 <meta property="og:url" content="http://example.com/2024/03/27/Switch%20%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%B7%E5%BC%8F/index.html">
 <meta property="og:site_name" content="小虾米">
-<meta property="og:description" content="最终效果 minHeight，switchMinWidth调整switch开关高度、宽度 android:thumb   开关按钮上原型滑块的样式 android:track  开关按钮下面导轨的样式 123456789101112&lt;Switch        android:layout_width&#x3D;&quot;48dp&quot;        android:layout_height">
+<meta property="og:description" content="最终效果     minHeight，switchMinWidth调整switch开关高度、宽度 android:thumb   开关按钮上原型滑块的样式 android:track  开关按钮下面导轨的样式 123456789101112&lt;Switch        android:layout_width&#x3D;&quot;48dp&quot;        android:layout_he">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://img2024.cnblogs.com/blog/2361747/202403/2361747-20240327172552413-774616666.png">
-<meta property="og:image" content="https://img2024.cnblogs.com/blog/2361747/202403/2361747-20240327172609896-2134569800.png">
-<meta property="og:image" content="https://img2024.cnblogs.com/blog/2361747/202403/2361747-20240327172440751-1354752248.png">
-<meta property="og:image" content="https://img2024.cnblogs.com/blog/2361747/202403/2361747-20240327172511824-1073557961.png">
-<meta property="og:image" content="https://img2024.cnblogs.com/blog/2361747/202403/2361747-20240327172529057-265160848.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xmbest/image/img/202407211709216.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xmbest/image/img/202407211710882.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xmbest/image/img/202407211712944.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xmbest/image/img/202407211712605.png">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xmbest/image/img/202407211712654.png">
 <meta property="article:published_time" content="2024-03-27T09:27:00.000Z">
-<meta property="article:modified_time" content="2024-07-20T13:18:01.943Z">
+<meta property="article:modified_time" content="2024-07-21T09:12:49.936Z">
 <meta property="article:author" content="XIAMI">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://img2024.cnblogs.com/blog/2361747/202403/2361747-20240327172552413-774616666.png">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/xmbest/image/img/202407211709216.png">
     
     
       
@@ -163,7 +163,11 @@
   
 
   <div class="content e-content" itemprop="articleBody">
-    <p>最终效果<br><img src="https://img2024.cnblogs.com/blog/2361747/202403/2361747-20240327172552413-774616666.png" alt="滑块打开样式"><br><img src="https://img2024.cnblogs.com/blog/2361747/202403/2361747-20240327172609896-2134569800.png" alt="滑块关闭样式"></p>
+    <p>最终效果</p>
+<img src="https://cdn.jsdelivr.net/gh/xmbest/image/img/202407211709216.png" alt="滑块打开样式" style="zoom: 67%;" />
+
+<img src="https://cdn.jsdelivr.net/gh/xmbest/image/img/202407211710882.png" alt="滑块关闭样式" style="zoom:67%;" />
+
 <p>minHeight，switchMinWidth调整switch开关高度、宽度</p>
 <p>android:thumb   开关按钮上原型滑块的样式</p>
 <p>android:track  开关按钮下面导轨的样式</p>
@@ -174,7 +178,7 @@
 
 <p>selector_switch_track.xml</p>
 <figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">&lt;?xml version=<span class="string">&quot;1.0&quot;</span> encoding=<span class="string">&quot;utf-8&quot;</span>?&gt;</span></span><br><span class="line"><span class="tag">&lt;<span class="name">selector</span> <span class="attr">xmlns:android</span>=<span class="string">&quot;http://schemas.android.com/apk/res/android&quot;</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:state_checked</span>=<span class="string">&quot;false&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">layer-list</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:width</span>=<span class="string">&quot;48dp&quot;</span> <span class="attr">android:height</span>=<span class="string">&quot;24dp&quot;</span> <span class="attr">android:drawable</span>=<span class="string">&quot;@mipmap/ic_thumb_off&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">layer-list</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:state_checked</span>=<span class="string">&quot;true&quot;</span>&gt;</span></span><br><span class="line">        <span class="tag">&lt;<span class="name">layer-list</span>&gt;</span></span><br><span class="line">            <span class="tag">&lt;<span class="name">item</span> <span class="attr">android:width</span>=<span class="string">&quot;48dp&quot;</span> <span class="attr">android:height</span>=<span class="string">&quot;24dp&quot;</span> <span class="attr">android:drawable</span>=<span class="string">&quot;@mipmap/ic_thumb_on&quot;</span> /&gt;</span></span><br><span class="line">        <span class="tag">&lt;/<span class="name">layer-list</span>&gt;</span></span><br><span class="line">    <span class="tag">&lt;/<span class="name">item</span>&gt;</span></span><br><span class="line"><span class="tag">&lt;/<span class="name">selector</span>&gt;</span></span><br></pre></td></tr></table></figure>
-<p>对应素材<br>ic_thumb_off<br><img src="https://img2024.cnblogs.com/blog/2361747/202403/2361747-20240327172440751-1354752248.png" alt="ic_thumb_off"><br>ic_thumb_on<br><img src="https://img2024.cnblogs.com/blog/2361747/202403/2361747-20240327172511824-1073557961.png" alt="ic_thumb_on"><br>ic_track<br><img src="https://img2024.cnblogs.com/blog/2361747/202403/2361747-20240327172529057-265160848.png" alt="ic_track"></p>
+<p>对应素材<br>ic_thumb_off<br><img src="https://cdn.jsdelivr.net/gh/xmbest/image/img/202407211712944.png"><br>ic_thumb_on<br><img src="https://cdn.jsdelivr.net/gh/xmbest/image/img/202407211712605.png"><br>ic_track<br><img src="https://cdn.jsdelivr.net/gh/xmbest/image/img/202407211712654.png"></p>
 
   </div>
 </article>
