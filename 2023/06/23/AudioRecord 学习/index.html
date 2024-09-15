@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="音频基础 声音是一种由物体振动引发的物理现象，如小提琴的弦声等。物体的振动使其四周空气的压强产生变化，这种忽强忽弱变化以波的形式向四周传播，当被人耳所接收时我们就听见了声音。  波形 声音是由物体的振动产生，这种振动引起了周围空气压强的振荡，我们称这种振荡的函数表现形式为波形   频率 声音的频率的周期的倒数，它表示的是声音在1s内的周期数，单位时赫兹(Hz，1000Hz表示每秒振动1000次">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AudioRecord 学习">
+<meta property="og:url" content="https://xmbest.github.io/2023/06/23/AudioRecord%20%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:site_name" content="小虾米">
+<meta property="og:description" content="音频基础 声音是一种由物体振动引发的物理现象，如小提琴的弦声等。物体的振动使其四周空气的压强产生变化，这种忽强忽弱变化以波的形式向四周传播，当被人耳所接收时我们就听见了声音。  波形 声音是由物体的振动产生，这种振动引起了周围空气压强的振荡，我们称这种振荡的函数表现形式为波形   频率 声音的频率的周期的倒数，它表示的是声音在1s内的周期数，单位时赫兹(Hz，1000Hz表示每秒振动1000次">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://cdn.jsdelivr.net/gh/xmbest/image/img/202407211716600.png">
+<meta property="article:published_time" content="2023-06-23T08:38:00.000Z">
+<meta property="article:modified_time" content="2024-09-15T08:25:06.417Z">
+<meta property="article:author" content="XIAMI">
+<meta property="article:tag" content="AudioRecord">
+<meta property="article:tag" content="音频">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.jsdelivr.net/gh/xmbest/image/img/202407211716600.png">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>AudioRecord 学习</title>
+    <!-- async scripts -->
+    <!-- Google Analytics -->
+
+
+    <!-- Umami Analytics -->
+
+
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 7.3.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="目录"><i class="fa-solid fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" aria-label="顶部" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fa-solid fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+        <!--
+       --><li><a href="/">主页</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     -->
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇" href="/2023/07/21/Mac%20JDK%20%E7%8E%AF%E5%A2%83%E9%85%8D%E7%BD%AE/"><i class="fa-solid fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇" href="/2023/05/09/Vue%20%E5%85%A8%E5%B1%80%E4%BD%BF%E7%94%A8%20WebSocket/"><i class="fa-solid fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章" href="#"><i class="fa-solid fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://xmbest.github.io/2023/06/23/AudioRecord%20%E5%AD%A6%E4%B9%A0/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://xmbest.github.io/2023/06/23/AudioRecord%20%E5%AD%A6%E4%B9%A0/&text=AudioRecord 学习"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://xmbest.github.io/2023/06/23/AudioRecord%20%E5%AD%A6%E4%B9%A0/&title=AudioRecord 学习"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://xmbest.github.io/2023/06/23/AudioRecord%20%E5%AD%A6%E4%B9%A0/&is_video=false&description=AudioRecord 学习"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=AudioRecord 学习&body=Check out this article: https://xmbest.github.io/2023/06/23/AudioRecord%20%E5%AD%A6%E4%B9%A0/"><i class="fa-solid fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://xmbest.github.io/2023/06/23/AudioRecord%20%E5%AD%A6%E4%B9%A0/&title=AudioRecord 学习"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://xmbest.github.io/2023/06/23/AudioRecord%20%E5%AD%A6%E4%B9%A0/&title=AudioRecord 学习"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://xmbest.github.io/2023/06/23/AudioRecord%20%E5%AD%A6%E4%B9%A0/&title=AudioRecord 学习"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://xmbest.github.io/2023/06/23/AudioRecord%20%E5%AD%A6%E4%B9%A0/&title=AudioRecord 学习"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://xmbest.github.io/2023/06/23/AudioRecord%20%E5%AD%A6%E4%B9%A0/&name=AudioRecord 学习&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://xmbest.github.io/2023/06/23/AudioRecord%20%E5%AD%A6%E4%B9%A0/&t=AudioRecord 学习"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    
+    
+      <div id="toc">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9F%B3%E9%A2%91%E5%9F%BA%E7%A1%80"><span class="toc-number">1.</span> <span class="toc-text">音频基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A2%E5%BD%A2"><span class="toc-number">1.1.</span> <span class="toc-text">波形</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%91%E7%8E%87"><span class="toc-number">1.2.</span> <span class="toc-text">频率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%87%E6%A0%B7%E7%B2%BE%E5%BA%A6-%E6%B7%B1%E5%BA%A6"><span class="toc-number">1.3.</span> <span class="toc-text">采样精度(深度)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E9%81%93%E6%95%B0"><span class="toc-number">1.4.</span> <span class="toc-text">通道数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%A7"><span class="toc-number">1.5.</span> <span class="toc-text">帧</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F"><span class="toc-number">1.6.</span> <span class="toc-text">存储方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Android%E9%9F%B3%E9%A2%91"><span class="toc-number">2.</span> <span class="toc-text">Android音频</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#AudioRecord"><span class="toc-number">2.1.</span> <span class="toc-text">AudioRecord</span></a></li></ol></li></ol>
+      </div>
+    
+  </span>
+</div>
+
+    
+    <div class="content index py4 ">
+        
+        <article class="post h-entry" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle p-name" itemprop="name headline">
+        AudioRecord 学习
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author p-author h-card" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span class="p-name" itemprop="name">XIAMI</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2023-06-23T08:38:00.000Z" class="dt-published" itemprop="datePublished">2023-06-23</time>
+        
+      
+    </div>
+
+
+      
+    <div class="article-category">
+        <i class="fa-solid fa-archive"></i>
+        <a class="category-link" href="/categories/Android/">Android</a>
+    </div>
+
+
+      
+    <div class="article-tag">
+        <i class="fa-solid fa-tag"></i>
+        <a class="p-category" href="/tags/AudioRecord/" rel="tag">AudioRecord</a>, <a class="p-category" href="/tags/%E9%9F%B3%E9%A2%91/" rel="tag">音频</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content e-content" itemprop="articleBody">
+    <h2 id="音频基础"><a href="#音频基础" class="headerlink" title="音频基础"></a>音频基础</h2><blockquote>
+<p>声音是一种由物体振动引发的物理现象，如小提琴的弦声等。物体的振动使其四周空气的压强产生变化，这种忽强忽弱变化以波的形式向四周传播，当被人耳所接收时我们就听见了声音。</p>
+</blockquote>
+<h3 id="波形"><a href="#波形" class="headerlink" title="波形"></a>波形</h3><blockquote>
+<p>声音是由物体的振动产生，这种振动引起了周围空气压强的振荡，我们称这种振荡的函数表现形式为波形</p>
+</blockquote>
+<p><img src="https://cdn.jsdelivr.net/gh/xmbest/image/img/202407211716600.png"></p>
+<h3 id="频率"><a href="#频率" class="headerlink" title="频率"></a>频率</h3><blockquote>
+<p>声音的频率的周期的倒数，它表示的是声音在1s内的周期数，单位时赫兹(Hz，1000Hz表示每秒振动1000次</p>
+</blockquote>
+<table>
+<thead>
+<tr>
+<th>声波</th>
+<th>范围（单位Hz）</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>次声</td>
+<td>0~20</td>
+</tr>
+<tr>
+<td>人耳</td>
+<td>20~20K</td>
+</tr>
+<tr>
+<td>超声</td>
+<td>20K~1G</td>
+</tr>
+<tr>
+<td>特超声</td>
+<td>1G~10T</td>
+</tr>
+</tbody></table>
+<p>采样定理：<strong>两倍频率去采集</strong></p>
+<p>麦克风采集模拟世界<strong>20</strong>KHz -&gt; AD -&gt; 计算机采样的2倍的<strong>20</strong>KHz（48KHz、<strong>44.1</strong>KHz）-&gt;<strong>DA</strong>转换-&gt;喇叭播放</p>
+<h3 id="采样精度-深度"><a href="#采样精度-深度" class="headerlink" title="采样精度(深度)"></a>采样精度(深度)</h3><blockquote>
+<p>每个样本点的大小，常用8bit、16bit、24bit</p>
+</blockquote>
+<h3 id="通道数"><a href="#通道数" class="headerlink" title="通道数"></a>通道数</h3><blockquote>
+<p>单声道、双声道、3、4、6</p>
+</blockquote>
+<h3 id="帧"><a href="#帧" class="headerlink" title="帧"></a>帧</h3><blockquote>
+<p>音频的概念没那么清晰，视频编码格式可以简单认为一帧就是编码后的一张图像</p>
+</blockquote>
+<p><strong>帧长</strong>：(1)可以指每帧采样数播放的时间,mp3 48k,1152个采样点，每帧为2ms; aac则是每帧是1024个采样点。 攒够一帧的数据才送去做编码(2) 也可以指压缩后每的数据长度。</p>
+<p>每持续时间(秒) &#x3D; 每采样点数 &#x2F; 采样频率 (HZ)</p>
+<h3 id="存储方式"><a href="#存储方式" class="headerlink" title="存储方式"></a>存储方式</h3><p><strong>交错模式</strong>：数据以连续帧的方式进行存放，首先记录帧1的左声道样本和右声道样本再记录下一帧</p>
+<table>
+<thead>
+<tr>
+<th align="center">L</th>
+<th align="center">R</th>
+<th align="center">L</th>
+<th align="center">R</th>
+<th align="center">L</th>
+<th align="center">R</th>
+<th align="center">…</th>
+</tr>
+</thead>
+</table>
+<p><strong>非交错模式</strong>：记录一个周期内所有帧的左声道样本再记录所有右声道样本</p>
+<table>
+<thead>
+<tr>
+<th align="center">L</th>
+<th align="center">L</th>
+<th align="center">L</th>
+<th align="center">…</th>
+<th align="center">R</th>
+<th align="center">R</th>
+<th align="center">R</th>
+</tr>
+</thead>
+</table>
+<h2 id="Android音频"><a href="#Android音频" class="headerlink" title="Android音频"></a>Android音频</h2><h3 id="AudioRecord"><a href="#AudioRecord" class="headerlink" title="AudioRecord"></a>AudioRecord</h3><blockquote>
+<p>在Android中，使用android.media.AudioRecord可实现灵活的录音配置，录取的是原始的pcm数据</p>
+</blockquote>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">/**</span></span><br><span class="line"><span class="comment">     * Class constructor.</span></span><br><span class="line"><span class="comment">     * Though some invalid parameters will result in an &#123;<span class="doctag">@link</span> IllegalArgumentException&#125; exception,</span></span><br><span class="line"><span class="comment">     * other errors do not.  Thus you should call &#123;<span class="doctag">@link</span> #getState()&#125; immediately after construction</span></span><br><span class="line"><span class="comment">     * to confirm that the object is usable.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> audioSource the recording source.</span></span><br><span class="line"><span class="comment">     *   See &#123;<span class="doctag">@link</span> MediaRecorder.AudioSource&#125; for the recording source definitions.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> sampleRateInHz the sample rate expressed in Hertz. 44100Hz is currently the only</span></span><br><span class="line"><span class="comment">     *   rate that is guaranteed to work on all devices, but other rates such as 22050,</span></span><br><span class="line"><span class="comment">     *   16000, and 11025 may work on some devices.</span></span><br><span class="line"><span class="comment">     *   &#123;<span class="doctag">@link</span> AudioFormat#SAMPLE_RATE_UNSPECIFIED&#125; means to use a route-dependent value</span></span><br><span class="line"><span class="comment">     *   which is usually the sample rate of the source.</span></span><br><span class="line"><span class="comment">     *   &#123;<span class="doctag">@link</span> #getSampleRate()&#125; can be used to retrieve the actual sample rate chosen.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> channelConfig describes the configuration of the audio channels.</span></span><br><span class="line"><span class="comment">     *   See &#123;<span class="doctag">@link</span> AudioFormat#CHANNEL_IN_MONO&#125; and</span></span><br><span class="line"><span class="comment">     *   &#123;<span class="doctag">@link</span> AudioFormat#CHANNEL_IN_STEREO&#125;.  &#123;<span class="doctag">@link</span> AudioFormat#CHANNEL_IN_MONO&#125; is guaranteed</span></span><br><span class="line"><span class="comment">     *   to work on all devices.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> audioFormat the format in which the audio data is to be returned.</span></span><br><span class="line"><span class="comment">     *   See &#123;<span class="doctag">@link</span> AudioFormat#ENCODING_PCM_8BIT&#125;, &#123;<span class="doctag">@link</span> AudioFormat#ENCODING_PCM_16BIT&#125;,</span></span><br><span class="line"><span class="comment">     *   and &#123;<span class="doctag">@link</span> AudioFormat#ENCODING_PCM_FLOAT&#125;.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@param</span> bufferSizeInBytes the total size (in bytes) of the buffer where audio data is written</span></span><br><span class="line"><span class="comment">     *   to during the recording. New audio data can be read from this buffer in smaller chunks</span></span><br><span class="line"><span class="comment">     *   than this size. See &#123;<span class="doctag">@link</span> #getMinBufferSize(int, int, int)&#125; to determine the minimum</span></span><br><span class="line"><span class="comment">     *   required buffer size for the successful creation of an AudioRecord instance. Using values</span></span><br><span class="line"><span class="comment">     *   smaller than getMinBufferSize() will result in an initialization failure.</span></span><br><span class="line"><span class="comment">     * <span class="doctag">@throws</span> java.lang.IllegalArgumentException</span></span><br><span class="line"><span class="comment">     */</span></span><br><span class="line"><span class="keyword">public</span> <span class="title function_">AudioRecord</span><span class="params">(<span class="type">int</span> audioSource, <span class="type">int</span> sampleRateInHz, <span class="type">int</span> channelConfig, <span class="type">int</span> audioFormat, <span class="type">int</span> bufferSizeInBytes)</span></span><br></pre></td></tr></table></figure>
+
+<p><strong>audioSource</strong>: 音频录制的音源</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">package</span> android.media;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">MediaRecorder</span> <span class="keyword">implements</span> <span class="title class_">AudioRouting</span>,</span><br><span class="line">                                      AudioRecordingMonitor,</span><br><span class="line">                                      AudioRecordingMonitorClient,</span><br><span class="line">                                      MicrophoneDirection&#123;</span><br><span class="line">   <span class="comment">/**</span></span><br><span class="line"><span class="comment">   		* 省略</span></span><br><span class="line"><span class="comment">   */</span>                                   </span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">AudioSource</span> &#123;</span><br><span class="line">        <span class="keyword">private</span> <span class="title function_">AudioSource</span><span class="params">()</span> &#123;&#125;</span><br><span class="line">        <span class="comment">//默认音频源</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">DEFAULT</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">       	<span class="comment">//设定录音来源为主麦克风</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">MIC</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line">       	<span class="comment">//上行声音</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">VOICE_UPLINK</span> <span class="operator">=</span> <span class="number">2</span>;</span><br><span class="line">       	<span class="comment">//下行声音</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">VOICE_DOWNLINK</span> <span class="operator">=</span> <span class="number">3</span>;</span><br><span class="line">        <span class="comment">//设定录音来源为语音拨出的语音与对方说话的声音</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">VOICE_CALL</span> <span class="operator">=</span> <span class="number">4</span>;</span><br><span class="line">       	<span class="comment">//设定录音来源于同方向的相机麦克风相同，若相机无内置相机或无法识别，则使用预设的麦克风</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">CAMCORDER</span> <span class="operator">=</span> <span class="number">5</span>;</span><br><span class="line">       	<span class="comment">//语音识别</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">VOICE_RECOGNITION</span> <span class="operator">=</span> <span class="number">6</span>;</span><br><span class="line">       	<span class="comment">//摄像头旁边的麦克风</span></span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">VOICE_COMMUNICATION</span> <span class="operator">=</span> <span class="number">7</span>;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">REMOTE_SUBMIX</span> <span class="operator">=</span> <span class="number">8</span>;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">UNPROCESSED</span> <span class="operator">=</span> <span class="number">9</span>;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">VOICE_PERFORMANCE</span> <span class="operator">=</span> <span class="number">10</span>;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">ECHO_REFERENCE</span> <span class="operator">=</span> <span class="number">1997</span>;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">RADIO_TUNER</span> <span class="operator">=</span> <span class="number">1998</span>;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">HOTWORD</span> <span class="operator">=</span> <span class="number">1999</span>;</span><br><span class="line">        <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">ULTRASOUND</span> <span class="operator">=</span> <span class="number">2000</span>;</span><br><span class="line">   &#125;   </span><br><span class="line">    <span class="comment">/**</span></span><br><span class="line"><span class="comment">   		* 省略</span></span><br><span class="line"><span class="comment">   */</span>                               </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>sampleRateInHz</strong>：音频采样率，即可每秒中采集多少个音频数据</p>
+<blockquote>
+<p>44100Hz是目前唯一保证在所有设备上工作的采样率，但其他速率如22050、16000和11025可能在某些设备上无法工作</p>
+</blockquote>
+<p><strong>channelConfig</strong>: 录音通道，单通道为 AudioFormat.CHANNEL_IN_MONO，双通道为AudioFormat.CHANNEL_IN_STEREO</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">CHANNEL_IN_LEFT</span> <span class="operator">=</span> <span class="number">0x4</span>;</span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">CHANNEL_IN_RIGHT</span> <span class="operator">=</span> <span class="number">0x8</span>;</span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">CHANNEL_IN_FRONT</span> <span class="operator">=</span> <span class="number">0x10</span>;</span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">CHANNEL_IN_BACK</span> <span class="operator">=</span> <span class="number">0x20</span>;</span><br><span class="line"><span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">CHANNEL_IN_MONO</span> <span class="operator">=</span> CHANNEL_IN_FRONT;</span><br><span class="line">   <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">CHANNEL_IN_STEREO</span> <span class="operator">=</span> (CHANNEL_IN_LEFT | CHANNEL_IN_RIGHT);</span><br></pre></td></tr></table></figure>
+
+<p><strong>audioFormat</strong>: 音频每个采样点的位数，即音频的精度，通道选用AudioFormat.ENCODING_PCM_16BIT即pcm 16位即可</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">final</span> <span class="keyword">class</span> <span class="title class_">AudioFormat</span> <span class="keyword">implements</span> <span class="title class_">Parcelable</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//---------------------------------------------------------</span></span><br><span class="line">    <span class="comment">// Constants</span></span><br><span class="line">    <span class="comment">//--------------------</span></span><br><span class="line">    <span class="comment">/** Invalid audio data format */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">ENCODING_INVALID</span> <span class="operator">=</span> <span class="number">0</span>;</span><br><span class="line">    <span class="comment">/** Default audio data format */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">ENCODING_DEFAULT</span> <span class="operator">=</span> <span class="number">1</span>;</span><br><span class="line"></span><br><span class="line">    <span class="comment">// These values must be kept in sync with core/jni/android_media_AudioFormat.h</span></span><br><span class="line">    <span class="comment">// Also sync av/services/audiopolicy/managerdefault/ConfigParsingUtils.h</span></span><br><span class="line">    <span class="comment">/** Audio data format: PCM 16 bit per sample. Guaranteed to be supported by devices. */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">ENCODING_PCM_16BIT</span> <span class="operator">=</span> <span class="number">2</span>;</span><br><span class="line">    <span class="comment">/** Audio data format: PCM 8 bit per sample. Not guaranteed to be supported by devices. */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">ENCODING_PCM_8BIT</span> <span class="operator">=</span> <span class="number">3</span>;</span><br><span class="line">    <span class="comment">/** Audio data format: single-precision floating-point per sample */</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">final</span> <span class="type">int</span> <span class="variable">ENCODING_PCM_FLOAT</span> <span class="operator">=</span> <span class="number">4</span>;</span><br><span class="line">     <span class="comment">/**</span></span><br><span class="line"><span class="comment">   		* 省略</span></span><br><span class="line"><span class="comment">   */</span>      </span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure>
+
+<p><strong>bufferSizeInBytes</strong>: 音频数据写入缓冲区的总数，通过 AudioRecord.getMinBufferSize 获取最小的缓冲区。</p>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">static</span> <span class="keyword">public</span> <span class="type">int</span> <span class="title function_">getMinBufferSize</span><span class="params">(<span class="type">int</span> sampleRateInHz, <span class="type">int</span> channelConfig, <span class="type">int</span> audioFormat)</span></span><br></pre></td></tr></table></figure>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+        
+          <li><a href="/">主页</a></li>
+        
+          <li><a href="/tags/">标签</a></li>
+        
+          <li><a href="/categories/">分类</a></li>
+        
+          <li><a href="/archives/">归档</a></li>
+        
+          <li><a href="/search/">搜索</a></li>
+        
+      </ul>
+    </div>
+
+    
+    
+      <div id="toc-footer" style="display: none">
+        <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9F%B3%E9%A2%91%E5%9F%BA%E7%A1%80"><span class="toc-number">1.</span> <span class="toc-text">音频基础</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%B3%A2%E5%BD%A2"><span class="toc-number">1.1.</span> <span class="toc-text">波形</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%A2%91%E7%8E%87"><span class="toc-number">1.2.</span> <span class="toc-text">频率</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%87%87%E6%A0%B7%E7%B2%BE%E5%BA%A6-%E6%B7%B1%E5%BA%A6"><span class="toc-number">1.3.</span> <span class="toc-text">采样精度(深度)</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E9%81%93%E6%95%B0"><span class="toc-number">1.4.</span> <span class="toc-text">通道数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%A7"><span class="toc-number">1.5.</span> <span class="toc-text">帧</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%98%E5%82%A8%E6%96%B9%E5%BC%8F"><span class="toc-number">1.6.</span> <span class="toc-text">存储方式</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Android%E9%9F%B3%E9%A2%91"><span class="toc-number">2.</span> <span class="toc-text">Android音频</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#AudioRecord"><span class="toc-number">2.1.</span> <span class="toc-text">AudioRecord</span></a></li></ol></li></ol>
+      </div>
+    
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=https://xmbest.github.io/2023/06/23/AudioRecord%20%E5%AD%A6%E4%B9%A0/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=https://xmbest.github.io/2023/06/23/AudioRecord%20%E5%AD%A6%E4%B9%A0/&text=AudioRecord 学习"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=https://xmbest.github.io/2023/06/23/AudioRecord%20%E5%AD%A6%E4%B9%A0/&title=AudioRecord 学习"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=https://xmbest.github.io/2023/06/23/AudioRecord%20%E5%AD%A6%E4%B9%A0/&is_video=false&description=AudioRecord 学习"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=AudioRecord 学习&body=Check out this article: https://xmbest.github.io/2023/06/23/AudioRecord%20%E5%AD%A6%E4%B9%A0/"><i class="fa-solid fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=https://xmbest.github.io/2023/06/23/AudioRecord%20%E5%AD%A6%E4%B9%A0/&title=AudioRecord 学习"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=https://xmbest.github.io/2023/06/23/AudioRecord%20%E5%AD%A6%E4%B9%A0/&title=AudioRecord 学习"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=https://xmbest.github.io/2023/06/23/AudioRecord%20%E5%AD%A6%E4%B9%A0/&title=AudioRecord 学习"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=https://xmbest.github.io/2023/06/23/AudioRecord%20%E5%AD%A6%E4%B9%A0/&title=AudioRecord 学习"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=https://xmbest.github.io/2023/06/23/AudioRecord%20%E5%AD%A6%E4%B9%A0/&name=AudioRecord 学习&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=https://xmbest.github.io/2023/06/23/AudioRecord%20%E5%AD%A6%E4%B9%A0/&t=AudioRecord 学习"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fa-solid fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        
+          <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fa-solid fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fa-solid fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fa-solid fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2022-2024
+    XIAMI
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+        <!--
+       --><li><a href="/">主页</a></li><!--
+     --><!--
+       --><li><a href="/tags/">标签</a></li><!--
+     --><!--
+       --><li><a href="/categories/">分类</a></li><!--
+     --><!--
+       --><li><a href="/archives/">归档</a></li><!--
+     --><!--
+       --><li><a href="/search/">搜索</a></li><!--
+     -->
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script>
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script>
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板！\">";
+    btn += '<i class="fa-regular fa-clone"></i>';
+    btn += '</span>';
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功！");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Disqus Comments -->
+
+<!-- utterances Comments -->
+
+</body>
+</html>
